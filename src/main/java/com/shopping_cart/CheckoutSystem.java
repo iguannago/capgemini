@@ -6,7 +6,9 @@ import java.util.List;
 /**
  * Created by davicres on 11/04/2016.
  */
-public class CheckoutSystem {
+public final class CheckoutSystem {
+    private Offer offer;
+
     public String totalCost(List<? extends Item> items) {
         BigDecimal totalCost = new BigDecimal("0.0");
         for (Item item: items) {
@@ -14,4 +16,9 @@ public class CheckoutSystem {
         }
         return "£" + totalCost;
     }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
 }

@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnitParamsRunner.class)
 public class CheckoutSystemTest {
 
+    public static final String APPLE_COST = "0.60";
+    public static final String ORANGE_COST = "0.25";
     private CheckoutSystem checkoutSystem = new CheckoutSystem();
     private List<Item> items = new ArrayList<Item>();
     public static final long CODBAR_APPLE = 123;
@@ -39,6 +41,24 @@ public class CheckoutSystemTest {
         };
     }
 
+    @Test
+    @Parameters(method = "getAmountOfApplesAndOrangesForOffer")
+    public void totalCostWhenBuyOneGetOneFreeOnAppleTest(int numApples, int numOranges) {
+        Offer offer = new BuyOneGetOneFreeApple();
+        checkoutSystem.setOffer(offer);
+        items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
+        String totalCost = checkoutSystem.totalCost(items);
+        System.out.println("totalCost: " + totalCost);
+        assertEquals("£0.85", totalCost);
+    }
+
+    private static final Object[] getAmountOfApplesAndOrangesForOffer() {
+        return new Integer[][]{
+                {1,1}
+        };
+    }
+
+
     private String workOutExpectedResult(List<Item> items) {
         BigDecimal totalcost = new BigDecimal("0.0");
         for (Item item: items) {
@@ -50,15 +70,16 @@ public class CheckoutSystemTest {
     private List<Item> createGivenNumberOfApplesAndOrangesInTheListItems(int numApples, int numOranges) {
         Item item;
         for (int i = 0; i < numApples; i++) {
-            item = new Apple("0.60", CODBAR_APPLE);
+            item = new Apple(APPLE_COST, CODBAR_APPLE);
             items.add(item);
         }
         for (int i = 0; i < numOranges; i++) {
-            item = new Orange("0.25", CODBAR_ORANGE);
+            item = new Orange(ORANGE_COST, CODBAR_ORANGE);
             items.add(item);
         }
         return items;
     }
+
 
 
 }
