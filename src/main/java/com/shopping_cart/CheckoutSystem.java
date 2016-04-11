@@ -10,7 +10,7 @@ public final class CheckoutSystem {
     private Offer offer;
 
     public String totalCost(List<? extends Item> items) {
-        BigDecimal totalCost = new BigDecimal("0.0");
+        BigDecimal totalCost = new BigDecimal("0.00");
         if (offer != null) {
             offer.apply(items);
         }

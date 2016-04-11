@@ -35,14 +35,9 @@ public class CheckoutSystemTest {
         assertEquals(workOutExpectedResult(items), totalCost);
     }
 
-    private static final Object[] getAmountOfApplesAndOranges() {
-        return new Integer[][]{
-                {1,1}, {2,2}, {3,1}, {4,5}, {0,0}, {10, 20}, {3,4}, {10,0}, {0,10}, {7,9}
-        };
-    }
 
     @Test
-    @Parameters(method = "getAmountOfApplesAndOrangesForOffer")
+    @Parameters(method = "getAmountOfApplesAndOranges")
     public void totalCostWhenBuyOneGetOneFreeOnAppleTest(int numApples, int numOranges) {
         Offer offer = new BuyOneGetOneFreeApple();
         checkoutSystem.setOffer(offer);
@@ -56,9 +51,9 @@ public class CheckoutSystemTest {
         assertEquals("£"+expected, totalCost);
     }
 
-    private static final Object[] getAmountOfApplesAndOrangesForOffer() {
+    private static final Object[] getAmountOfApplesAndOranges() {
         return new Integer[][]{
-                {1,1}, {2,1}, {2,2}, {3,1}, {6,3}
+                {1,1}, {2,2}, {3,1}, {4,5}, {0,0}, {10, 20}, {3,4}, {10,0}, {0,10}, {7,9}, {2,1}, {6,3}
         };
     }
 
@@ -79,7 +74,7 @@ public class CheckoutSystemTest {
     }
 
     private String workOutExpectedResult(List<Item> items) {
-        BigDecimal totalcost = new BigDecimal("0.0");
+        BigDecimal totalcost = new BigDecimal("0.00");
         for (Item item: items) {
             totalcost = totalcost.add(item.getCost());
         }
