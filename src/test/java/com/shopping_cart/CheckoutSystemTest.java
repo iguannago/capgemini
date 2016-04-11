@@ -39,8 +39,7 @@ public class CheckoutSystemTest {
     @Test
     @Parameters(method = "getAmountOfApplesAndOranges")
     public void totalCostWhenBuyOneGetOneFreeOnAppleTest(int numApples, int numOranges) {
-        Offer offer = new BuyOneGetOneFreeApple();
-        checkoutSystem.setOffer(offer);
+        checkoutSystem.setOffer(new BuyOneGetOneFreeApple());
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
         System.out.println("items before offer applied: " + items);
         String totalCost = checkoutSystem.totalCost(items);
@@ -51,18 +50,11 @@ public class CheckoutSystemTest {
         assertEquals("£"+expected, totalCost);
     }
 
-    private static final Object[] getAmountOfApplesAndOranges() {
-        return new Integer[][]{
-                {1,1}, {2,2}, {3,1}, {4,5}, {0,0}, {10, 20}, {3,4}, {10,0}, {0,10}, {7,9}, {2,1}, {6,3}
-        };
-    }
 
     @Test
-    public void totalCostWhenThreeForThePriceOfTwoOrangesTest() {
-        Offer offer = new ThreeForThePriceOfTwoOranges();
-        checkoutSystem.setOffer(offer);
-        int numOranges = 3;
-        int numApples = 1;
+    @Parameters(method = "getAmountOfApplesAndOranges")
+    public void totalCostWhenThreeForThePriceOfTwoOrangesTest(int numApples, int numOranges) {
+        checkoutSystem.setOffer(new ThreeForThePriceOfTwoOranges());
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
         System.out.println("items before offer applied: " + items);
         String totalCost = checkoutSystem.totalCost(items);
@@ -71,6 +63,13 @@ public class CheckoutSystemTest {
         BigDecimal expected = new BigDecimal(ORANGE_COST).multiply(BigDecimal.valueOf(numOranges - (numOranges/3))).
                 add(new BigDecimal(APPLE_COST).multiply(BigDecimal.valueOf(numApples)));
         assertEquals("£"+expected, totalCost);
+    }
+
+    private static final Object[] getAmountOfApplesAndOranges() {
+        return new Integer[][]{
+                {1,1}, {2,2}, {3,1}, {4,5}, {0,0}, {10, 20}, {3,4}, {10,0}, {0,10}, {7,9}, {2,1}, {6,3},
+                {2,3}, {1,6}
+        };
     }
 
     private String workOutExpectedResult(List<Item> items) {
