@@ -8,6 +8,10 @@ import java.util.List;
  */
 public class CheckoutSystem {
     public BigDecimal totalCost(List<Item> items) {
-        return new BigDecimal("0.85");
+        BigDecimal totalCost = new BigDecimal("0.0");
+        for (Item item: items) {
+            totalCost = totalCost.add(item.getCost());
+        }
+        return totalCost;
     }
 }

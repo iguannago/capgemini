@@ -22,4 +22,15 @@ public class CheckoutSystemTest {
         BigDecimal totalCost = checkoutSystem.totalCost(items);
         assertEquals(new BigDecimal("0.85"), totalCost);
     }
+
+    @Test
+    public void totalCostForTwoApplesAndTwoOrangesTest() {
+        CheckoutSystem checkoutSystem = new CheckoutSystem();
+        List<Item> items = Arrays.asList(new Apple("0.60", 123), new Apple("0.60", 124), new Orange("0.25", 125),
+                new Orange("0.25", 126));
+        BigDecimal totalCost = checkoutSystem.totalCost(items);
+        assertEquals(new BigDecimal("1.70"), totalCost);
+    }
+
+
 }
