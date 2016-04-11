@@ -1,6 +1,9 @@
 package com.shopping_cart;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by davicres on 11/04/2016.
  */
+@RunWith(JUnitParamsRunner.class)
 public class CheckoutSystemTest {
 
     private CheckoutSystem checkoutSystem = new CheckoutSystem();
@@ -21,10 +25,18 @@ public class CheckoutSystemTest {
 
 
     @Test
-    public void totalCostTest() {
-        items = createGivenNumberOfApplesAndOrangesInTheListItems(2,2);
+    @Parameters(method = "getAmountOfApplesAndOranges")
+    public void totalCostTest(int numApples, int numOranges) {
+        items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
         BigDecimal totalCost = checkoutSystem.totalCost(items);
+        System.out.println("totalCost: " + totalCost);
         assertEquals(workOutExpectedResult(items), totalCost);
+    }
+
+    private static final Object[] getAmountOfApplesAndOranges() {
+        return new Integer[][]{
+                {1,1}, {2,2}, {3,1}, {4,5}, {0,0}, {10, 20}, {3,4}, {10,0}, {0,10}, {7,9}
+        };
     }
 
     private BigDecimal workOutExpectedResult(List<Item> items) {
