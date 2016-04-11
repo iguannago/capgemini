@@ -3,7 +3,7 @@ package com.shopping_cart;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -13,23 +13,39 @@ import static org.junit.Assert.assertEquals;
  * Created by davicres on 11/04/2016.
  */
 public class CheckoutSystemTest {
-    @Test
-    public void totalCostForAnAppleAndAnOrangeTest() {
-        CheckoutSystem checkoutSystem = new CheckoutSystem();
-        long codbarApple = 123;
-        long codbarOrange = 1234;
-        List<Item> items = Arrays.asList(new Apple("0.60", codbarApple), new Orange("0.25", codbarOrange));
-        BigDecimal totalCost = checkoutSystem.totalCost(items);
-        assertEquals(new BigDecimal("0.85"), totalCost);
-    }
+
+    private CheckoutSystem checkoutSystem = new CheckoutSystem();
+    private List<Item> items = new ArrayList<Item>();
+    public static final long CODBAR_APPLE = 123;
+    public static final long CODBAR_ORANGE = 1234;
+
 
     @Test
-    public void totalCostForTwoApplesAndTwoOrangesTest() {
-        CheckoutSystem checkoutSystem = new CheckoutSystem();
-        List<Item> items = Arrays.asList(new Apple("0.60", 123), new Apple("0.60", 124), new Orange("0.25", 125),
-                new Orange("0.25", 126));
+    public void totalCostTest() {
+        items = createGivenNumberOfApplesAndOrangesInTheListItems(2,2);
         BigDecimal totalCost = checkoutSystem.totalCost(items);
-        assertEquals(new BigDecimal("1.70"), totalCost);
+        assertEquals(workOutExpectedResult(items), totalCost);
+    }
+
+    private BigDecimal workOutExpectedResult(List<Item> items) {
+        BigDecimal totalcost = new BigDecimal("0.0");
+        for (Item item: items) {
+            totalcost = totalcost.add(item.getCost());
+        }
+        return totalcost;
+    }
+
+    private List<Item> createGivenNumberOfApplesAndOrangesInTheListItems(int numApples, int numOranges) {
+        Item item;
+        for (int i = 0; i < numApples; i++) {
+            item = new Apple("0.60", CODBAR_APPLE);
+            items.add(item);
+        }
+        for (int i = 0; i < numOranges; i++) {
+            item = new Orange("0.25", CODBAR_ORANGE);
+            items.add(item);
+        }
+        return items;
     }
 
 
