@@ -67,13 +67,12 @@ public class CheckoutSystemTest {
     }
 
     @Test
-    public void totalCostWhenBothOffersTest() {
+    @Parameters(method = "getAmountOfApplesAndOranges")
+    public void totalCostWhenBothOffersTest(int numApples, int numOranges) {
         BuyOneGetOneFreeApple appleOffer = new BuyOneGetOneFreeApple();
         ThreeForThePriceOfTwoOranges orangeOffer = new ThreeForThePriceOfTwoOranges();
         List<Offer> offers = Arrays.asList(appleOffer, orangeOffer);
         checkoutSystem.setOffers(offers);
-        int numApples = 6;
-        int numOranges = 6;
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
         System.out.println("items before offer applied: " + items);
         String totalCost = checkoutSystem.totalCost(items);
