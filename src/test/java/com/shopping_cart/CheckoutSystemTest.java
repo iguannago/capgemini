@@ -62,6 +62,22 @@ public class CheckoutSystemTest {
         };
     }
 
+    @Test
+    public void totalCostWhenThreeForThePriceOfTwoOrangesTest() {
+        Offer offer = new ThreeForThePriceOfTwoOranges();
+        checkoutSystem.setOffer(offer);
+        int numOranges = 3;
+        int numApples = 1;
+        items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
+        System.out.println("items before offer applied: " + items);
+        String totalCost = checkoutSystem.totalCost(items);
+        System.out.println("items after offer applied: " + items);
+        System.out.println("totalCost: " + totalCost);
+        BigDecimal expected = new BigDecimal(ORANGE_COST).multiply(BigDecimal.valueOf(numOranges - (numOranges/3))).
+                add(new BigDecimal(APPLE_COST).multiply(BigDecimal.valueOf(numApples)));
+        assertEquals("£"+expected, totalCost);
+    }
+
     private String workOutExpectedResult(List<Item> items) {
         BigDecimal totalcost = new BigDecimal("0.0");
         for (Item item: items) {
