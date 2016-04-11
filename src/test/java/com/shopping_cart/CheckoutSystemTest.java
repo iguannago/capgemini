@@ -28,7 +28,7 @@ public class CheckoutSystemTest {
     @Parameters(method = "getAmountOfApplesAndOranges")
     public void totalCostTest(int numApples, int numOranges) {
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
-        BigDecimal totalCost = checkoutSystem.totalCost(items);
+        String totalCost = checkoutSystem.totalCost(items);
         System.out.println("totalCost: " + totalCost);
         assertEquals(workOutExpectedResult(items), totalCost);
     }
@@ -39,12 +39,12 @@ public class CheckoutSystemTest {
         };
     }
 
-    private BigDecimal workOutExpectedResult(List<Item> items) {
+    private String workOutExpectedResult(List<Item> items) {
         BigDecimal totalcost = new BigDecimal("0.0");
         for (Item item: items) {
             totalcost = totalcost.add(item.getCost());
         }
-        return totalcost;
+        return "£" + totalcost;
     }
 
     private List<Item> createGivenNumberOfApplesAndOrangesInTheListItems(int numApples, int numOranges) {
