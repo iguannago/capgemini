@@ -9,24 +9,14 @@ import java.util.List;
 public class ThreeForThePriceOfTwoOranges implements Offer {
     @Override
     public void apply(List<? extends Item> items) {
-        int freeOranges = getNumOfOranges(items) / 3;
+        int freeOranges = getNumOfItemsForTheGivenObject(items, Orange.class) / 3;
         Iterator<? extends Item> iter = items.iterator();
         while(iter.hasNext()&&freeOranges!=0) {
             Item item = iter.next();
-            if (item.getClass().equals(Orange.class)) {
+            if (isEqualsToObj(item, Orange.class)) {
                 iter.remove();
                 freeOranges--;
             }
         }
-    }
-
-    private int getNumOfOranges(List<? extends Item> items) {
-        int numOranges = 0;
-        for (Item item: items) {
-            if (item.getClass().equals(Orange.class)) {
-                numOranges++;
-            }
-        }
-        return numOranges;
     }
 }
