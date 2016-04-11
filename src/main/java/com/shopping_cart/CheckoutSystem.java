@@ -1,17 +1,18 @@
 package com.shopping_cart;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by davicres on 11/04/2016.
  */
 public final class CheckoutSystem {
-    private Offer offer;
+    private List<? extends Offer> offers = new ArrayList<>();
 
     public String totalCost(List<? extends Item> items) {
         BigDecimal totalCost = new BigDecimal("0.00");
-        if (offer != null) {
+        for (Offer offer: offers) {
             offer.apply(items);
         }
         for (Item item: items) {
@@ -20,8 +21,8 @@ public final class CheckoutSystem {
         return "£" + totalCost;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 
 }

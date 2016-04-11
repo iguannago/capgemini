@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -39,7 +40,7 @@ public class CheckoutSystemTest {
     @Test
     @Parameters(method = "getAmountOfApplesAndOranges")
     public void totalCostWhenBuyOneGetOneFreeOnAppleTest(int numApples, int numOranges) {
-        checkoutSystem.setOffer(new BuyOneGetOneFreeApple());
+        checkoutSystem.setOffers(Arrays.asList(new BuyOneGetOneFreeApple()));
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
         System.out.println("items before offer applied: " + items);
         String totalCost = checkoutSystem.totalCost(items);
@@ -54,7 +55,7 @@ public class CheckoutSystemTest {
     @Test
     @Parameters(method = "getAmountOfApplesAndOranges")
     public void totalCostWhenThreeForThePriceOfTwoOrangesTest(int numApples, int numOranges) {
-        checkoutSystem.setOffer(new ThreeForThePriceOfTwoOranges());
+        checkoutSystem.setOffers(Arrays.asList(new ThreeForThePriceOfTwoOranges()));
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
         System.out.println("items before offer applied: " + items);
         String totalCost = checkoutSystem.totalCost(items);
@@ -62,6 +63,24 @@ public class CheckoutSystemTest {
         System.out.println("totalCost: " + totalCost);
         BigDecimal expected = new BigDecimal(ORANGE_COST).multiply(BigDecimal.valueOf(numOranges - (numOranges/3))).
                 add(new BigDecimal(APPLE_COST).multiply(BigDecimal.valueOf(numApples)));
+        assertEquals("£"+expected, totalCost);
+    }
+
+    @Test
+    public void totalCostWhenBothOffersTest() {
+        BuyOneGetOneFreeApple appleOffer = new BuyOneGetOneFreeApple();
+        ThreeForThePriceOfTwoOranges orangeOffer = new ThreeForThePriceOfTwoOranges();
+        List<Offer> offers = Arrays.asList(appleOffer, orangeOffer);
+        checkoutSystem.setOffers(offers);
+        int numApples = 6;
+        int numOranges = 6;
+        items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
+        System.out.println("items before offer applied: " + items);
+        String totalCost = checkoutSystem.totalCost(items);
+        System.out.println("items after offer applied: " + items);
+        System.out.println("totalCost: " + totalCost);
+        BigDecimal expected = new BigDecimal(ORANGE_COST).multiply(BigDecimal.valueOf(numOranges - (numOranges/3))).
+                add(new BigDecimal(APPLE_COST).multiply(BigDecimal.valueOf(numApples - (numApples/2))));
         assertEquals("£"+expected, totalCost);
     }
 
