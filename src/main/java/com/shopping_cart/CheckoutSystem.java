@@ -11,6 +11,9 @@ public final class CheckoutSystem {
 
     public String totalCost(List<? extends Item> items) {
         BigDecimal totalCost = new BigDecimal("0.0");
+        if (offer != null) {
+            offer.apply(items);
+        }
         for (Item item: items) {
             totalCost = totalCost.add(item.getCost());
         }

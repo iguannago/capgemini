@@ -7,4 +7,9 @@ public final class Apple extends Item {
     public Apple(String cost, long codbar) {
         super(cost, codbar);
     }
+
+    @Override
+    public String toString() {
+        return "Apple";
+    }
 }

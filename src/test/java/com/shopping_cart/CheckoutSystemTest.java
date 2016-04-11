@@ -47,17 +47,20 @@ public class CheckoutSystemTest {
         Offer offer = new BuyOneGetOneFreeApple();
         checkoutSystem.setOffer(offer);
         items = createGivenNumberOfApplesAndOrangesInTheListItems(numApples, numOranges);
+        System.out.println("items before offer applied: " + items);
         String totalCost = checkoutSystem.totalCost(items);
+        System.out.println("items after offer applied: " + items);
         System.out.println("totalCost: " + totalCost);
-        assertEquals("£0.85", totalCost);
+        BigDecimal expected = new BigDecimal(APPLE_COST).multiply(BigDecimal.valueOf(numApples - (numApples/2))).
+                add(new BigDecimal(ORANGE_COST).multiply(BigDecimal.valueOf(numOranges)));
+        assertEquals("£"+expected, totalCost);
     }
 
     private static final Object[] getAmountOfApplesAndOrangesForOffer() {
         return new Integer[][]{
-                {1,1}
+                {1,1}, {2,1}
         };
     }
-
 
     private String workOutExpectedResult(List<Item> items) {
         BigDecimal totalcost = new BigDecimal("0.0");

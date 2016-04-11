@@ -7,4 +7,9 @@ public final class Orange extends Item {
     public Orange(String cost, long codbar) {
         super(cost, codbar);
     }
+
+    @Override
+    public String toString() {
+        return "Orange";
+    }
 }
